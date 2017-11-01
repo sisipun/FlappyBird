@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
@@ -19,13 +20,14 @@ public class FlapFlap extends ApplicationAdapter {
 	private Texture midFlapBird;
 	private Texture upFlapBird;
 	private Rectangle bucket;
+	private Animation<Texture> flyAnimation;
 
 	@Override
 	public void create () {
         touchPosition = new Vector3();
 
 	    camera = new OrthographicCamera();
-	    camera.setToOrtho(false, 800, 480);
+	    camera.setToOrtho(false, 480, 800);
 
 		batch = new SpriteBatch();
 
@@ -34,8 +36,8 @@ public class FlapFlap extends ApplicationAdapter {
 		upFlapBird = new Texture("bluebird-upflap.png");
 
 		bucket = new Rectangle();
-		bucket.x = 800/2 - 64/2;
-		bucket.y = 20;
+		bucket.x = 480/2 - 64/2;
+		bucket.y = 800/2 - 64/2;
 		bucket.width = 64;
 		bucket.height = 64;
 	}
@@ -52,12 +54,14 @@ public class FlapFlap extends ApplicationAdapter {
 		batch.draw(downFlapBird, bucket.x, bucket.y);
 		batch.end();
 
+		float newPosition;
 		if (Gdx.input.isTouched()) {
-            touchPosition.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-            camera.unproject(touchPosition);
-            bucket.x = (int) (touchPosition.x - 64/2);
-            bucket.y = (int) (touchPosition.y - 64/2);
-        }
+			newPosition = bucket.y + 12;
+			bucket.y = newPosition < 790 ? newPosition : 790;
+        } else {
+			newPosition = bucket.y - 12;
+			bucket.y = newPosition > 10 ? newPosition : 10;
+		}
 	}
 	
 	@Override
