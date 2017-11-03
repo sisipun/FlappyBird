@@ -19,6 +19,7 @@ public class FlapFlap extends ApplicationAdapter {
 	private Texture downFlapBird;
 	private Texture midFlapBird;
 	private Texture upFlapBird;
+	private Texture background;
 	private Rectangle bucket;
 	private Animation<Texture> flyAnimation;
 
@@ -34,6 +35,8 @@ public class FlapFlap extends ApplicationAdapter {
 		downFlapBird = new Texture("bluebird-downflap.png");
 		midFlapBird = new Texture("bluebird-midflap.png");
 		upFlapBird = new Texture("bluebird-upflap.png");
+
+		background = new Texture("background-day.png");
 
 		bucket = new Rectangle();
 		bucket.x = 480/2 - 64/2;
@@ -51,6 +54,7 @@ public class FlapFlap extends ApplicationAdapter {
 
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
+		batch.draw(background,0,0,480, 800);
 		batch.draw(downFlapBird, bucket.x, bucket.y);
 		batch.end();
 
