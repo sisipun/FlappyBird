@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.Texture
 import io.kadach.FlapFlap
+import io.kadach.storage.GameConstants.HEIGHT
+import io.kadach.storage.GameConstants.WIDTH
 
 
 abstract class BaseScreen(
@@ -15,7 +17,7 @@ abstract class BaseScreen(
 ) : ScreenAdapter() {
 
     init {
-        camera.setToOrtho(false, FlapFlap.WIDTH, FlapFlap.HEIGHT)
+        camera.setToOrtho(false, WIDTH, HEIGHT)
     }
 
     abstract fun update(delta: Float)
@@ -33,7 +35,7 @@ abstract class BaseScreen(
         update(delta)
         game.batch.projectionMatrix = camera.combined
         game.batch.begin()
-        game.batch.draw(background, 0f, 0f, FlapFlap.WIDTH, FlapFlap.HEIGHT)
+        game.batch.draw(background, 0f, 0f, WIDTH, HEIGHT)
         render()
         game.batch.end()
         handleInput()
