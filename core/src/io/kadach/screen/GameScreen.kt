@@ -7,8 +7,8 @@ import com.badlogic.gdx.utils.TimeUtils
 import io.kadach.FlapFlap
 import io.kadach.model.Bird
 import io.kadach.model.Pipe
-import io.kadach.storage.GameConstants.HEIGHT
-import io.kadach.storage.GameConstants.HOLE_HEIGHT
+import io.kadach.component.GameConstants.HEIGHT
+import io.kadach.component.GameConstants.HOLE_HEIGHT
 
 
 class GameScreen(
@@ -44,7 +44,9 @@ class GameScreen(
     }
 
     override fun handleInput() {
-        if (Gdx.input.justTouched()) bird.jump()
+        if (Gdx.input.justTouched()) {
+            bird.jump()
+        }
     }
 
     override fun screenDispose() {

@@ -6,14 +6,15 @@ import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.Texture
 import io.kadach.FlapFlap
-import io.kadach.storage.GameConstants.HEIGHT
-import io.kadach.storage.GameConstants.WIDTH
+import io.kadach.component.BackgroundHandler
+import io.kadach.component.GameConstants.HEIGHT
+import io.kadach.component.GameConstants.WIDTH
 
 
 abstract class BaseScreen(
-        val game: FlapFlap,
+        protected val game: FlapFlap,
         private val camera: OrthographicCamera = OrthographicCamera(),
-        private val background: Texture = Texture("background-day.png")
+        private val background: Texture = Texture(BackgroundHandler.getBackground())
 ) : ScreenAdapter() {
 
     init {

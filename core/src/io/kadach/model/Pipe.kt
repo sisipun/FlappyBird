@@ -2,9 +2,9 @@ package io.kadach.model
 
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.math.Vector3
-import io.kadach.storage.GameConstants.HEIGHT
-import io.kadach.storage.GameConstants.HOLE_HEIGHT
-import io.kadach.storage.GameConstants.WIDTH
+import io.kadach.component.GameConstants.HEIGHT
+import io.kadach.component.GameConstants.HOLE_HEIGHT
+import io.kadach.component.GameConstants.WIDTH
 
 
 class Pipe(y: Float) {

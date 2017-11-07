@@ -1,4 +1,4 @@
-package io.kadach.storage
+package io.kadach.component
 
 
 object GameConstants {
