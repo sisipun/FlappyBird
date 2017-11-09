@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.Texture
 import io.kadach.FlapFlap
 import io.kadach.component.BackgroundHandler
+import io.kadach.component.GameConstants.GROUND_HEIGHT
 import io.kadach.component.GameConstants.HEIGHT
 import io.kadach.component.GameConstants.WIDTH
 
@@ -14,7 +15,8 @@ import io.kadach.component.GameConstants.WIDTH
 abstract class BaseScreen(
         protected val game: FlapFlap,
         private val camera: OrthographicCamera = OrthographicCamera(),
-        private val background: Texture = Texture(BackgroundHandler.getBackground())
+        private val backgroundTexture: Texture = Texture(BackgroundHandler.getBackground()),
+        private val groundTexture: Texture = Texture("base.png")
 ) : ScreenAdapter() {
 
     init {
@@ -36,14 +38,15 @@ abstract class BaseScreen(
         update(delta)
         game.batch.projectionMatrix = camera.combined
         game.batch.begin()
-        game.batch.draw(background, 0f, 0f, WIDTH, HEIGHT)
+        game.batch.draw(backgroundTexture, 0f, 0f, WIDTH, HEIGHT)
         render()
+        game.batch.draw(groundTexture, 0f, 0f, WIDTH, GROUND_HEIGHT)
         game.batch.end()
         handleInput()
     }
 
     override fun dispose() {
-        background.dispose()
+        backgroundTexture.dispose()
         screenDispose()
     }
 }

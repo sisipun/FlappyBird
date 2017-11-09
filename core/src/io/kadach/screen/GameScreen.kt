@@ -5,10 +5,12 @@ import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.TimeUtils
 import io.kadach.FlapFlap
-import io.kadach.model.Bird
-import io.kadach.model.Pipe
+import io.kadach.component.GameConstants.DELAY_HEIGHT
+import io.kadach.component.GameConstants.GROUND_HEIGHT
 import io.kadach.component.GameConstants.HEIGHT
 import io.kadach.component.GameConstants.HOLE_HEIGHT
+import io.kadach.model.Bird
+import io.kadach.model.Pipe
 
 
 class GameScreen(
@@ -38,7 +40,7 @@ class GameScreen(
         }
 
         if (TimeUtils.millis() - lastPipeTime > 1100) {
-            pipes.add(Pipe(MathUtils.random(-1* HOLE_HEIGHT, -1 * HEIGHT)))
+            pipes.add(Pipe(MathUtils.random(-1* (HOLE_HEIGHT  + DELAY_HEIGHT), -1 * (HEIGHT - GROUND_HEIGHT) + DELAY_HEIGHT)))
             lastPipeTime = TimeUtils.millis()
         }
     }

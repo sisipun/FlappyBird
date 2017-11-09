@@ -5,6 +5,7 @@ import com.badlogic.gdx.audio.Sound
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.math.Vector3
 import io.kadach.component.GameConstants.GRAVITY
+import io.kadach.component.GameConstants.GROUND_HEIGHT
 
 
 class Bird(x: Float, y: Float) {
@@ -13,8 +14,8 @@ class Bird(x: Float, y: Float) {
     private val velocity: Vector3 = Vector3(0f, 0f, 0f)
     val texture: Texture = Texture("bluebird-downflap.png")
     private val flySound: Sound = Gdx.audio.newSound(Gdx.files.internal("sfx_wing.ogg"))
-    val width = 50f
-    val height = 50f
+    val width = 40f
+    val height = 40f
 
     fun update(delta: Float) {
         velocity.add(Vector3(0f, GRAVITY, 0f))
@@ -22,13 +23,13 @@ class Bird(x: Float, y: Float) {
 
         position.add(velocity)
         velocity.scl(1 / delta)
-        if (position.y < 0) {
-            position.y = 0f
+        if (position.y < GROUND_HEIGHT) {
+            position.y = GROUND_HEIGHT
         }
     }
 
     fun jump() {
-        velocity.y = 450f
+        velocity.y = 550f
         flySound.play()
     }
 
