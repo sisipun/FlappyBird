@@ -8,7 +8,7 @@ import io.kadach.component.constant.GameConstants.HEIGHT
 import io.kadach.component.constant.GameConstants.WIDTH
 
 
-class Pipe(private val speed: Float, private val minY: Float, private val holeHeight: Float) {
+class Pipe(private val horizontalVelocity: Float, private val minY: Float, private val holeHeight: Float) {
 
     val bottomBound: Rectangle get() = Rectangle(bottomPosition.x, bottomPosition.y, width, height)
     val topBound: Rectangle get() = Rectangle(topPosition.x, topPosition.y, width, height)
@@ -17,7 +17,7 @@ class Pipe(private val speed: Float, private val minY: Float, private val holeHe
 
     private val bottomPosition: Vector2 = Vector2(WIDTH, getStartY())
     private val topPosition: Vector2 get() = Vector2(bottomPosition).add(0f, height + holeHeight)
-    private val velocity: Vector2 = Vector2(speed, 0f)
+    private val velocity: Vector2 = Vector2(horizontalVelocity, 0f)
     private val width = 75f
     private val height = HEIGHT
 

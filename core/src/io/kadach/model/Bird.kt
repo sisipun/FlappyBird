@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Vector2
 import io.kadach.component.handler.BirdTextureHandler
 
 
-class Bird(x: Float, y: Float, private val minY: Float, private val fallSpeed: Float) {
+class Bird(x: Float, y: Float, private val minY: Float, private val fallVelocity: Float) {
 
     val bound: Rectangle get() = Rectangle(position.x, position.y, width, height)
     val texture: Texture = Texture(BirdTextureHandler.getBirdTexture())
@@ -21,7 +21,7 @@ class Bird(x: Float, y: Float, private val minY: Float, private val fallSpeed: F
 
 
     fun update(delta: Float) {
-        velocity.add(Vector2(0f, fallSpeed))
+        velocity.add(Vector2(0f, fallVelocity))
         velocity.scl(delta)
 
         position.add(velocity)
