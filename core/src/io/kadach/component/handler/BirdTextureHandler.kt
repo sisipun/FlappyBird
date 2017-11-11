@@ -1,4 +1,4 @@
-package io.kadach.component
+package io.kadach.component.handler
 
 import com.badlogic.gdx.utils.Array
 import java.util.*

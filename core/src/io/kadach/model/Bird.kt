@@ -3,35 +3,42 @@ package io.kadach.model
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.audio.Sound
 import com.badlogic.gdx.graphics.Texture
-import com.badlogic.gdx.math.Vector3
-import io.kadach.component.BirdTextureHandler
-import io.kadach.component.GameConstants.GRAVITY
-import io.kadach.component.GameConstants.GROUND_HEIGHT
+import com.badlogic.gdx.math.Rectangle
+import com.badlogic.gdx.math.Vector2
+import io.kadach.component.handler.BirdTextureHandler
 
 
-class Bird(x: Float, y: Float) {
+class Bird(x: Float, y: Float, private val minY: Float, private val fallSpeed: Float) {
 
-    val position: Vector3 = Vector3(x, y, 0f)
-    private val velocity: Vector3 = Vector3(0f, 0f, 0f)
+    val bound: Rectangle get() = Rectangle(position.x, position.y, width, height)
     val texture: Texture = Texture(BirdTextureHandler.getBirdTexture())
+
+    private val position: Vector2 = Vector2(x, y)
+    private val velocity: Vector2 = Vector2(0f, 0f)
+    private val width = 40f
+    private val height = 40f
     private val flySound: Sound = Gdx.audio.newSound(Gdx.files.internal("sfx_wing.ogg"))
-    val width = 40f
-    val height = 40f
+
 
     fun update(delta: Float) {
-        velocity.add(Vector3(0f, GRAVITY, 0f))
+        velocity.add(Vector2(0f, fallSpeed))
         velocity.scl(delta)
 
         position.add(velocity)
         velocity.scl(1 / delta)
-        if (position.y < GROUND_HEIGHT) {
-            position.y = GROUND_HEIGHT
+        if (position.y < minY) {
+            position.y = minY
         }
     }
 
     fun jump() {
         velocity.y = 550f
         flySound.play()
+    }
+
+    fun dispose() {
+        texture.dispose()
+        flySound.dispose()
     }
 
 }

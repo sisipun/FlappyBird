@@ -4,8 +4,8 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.math.Rectangle
 import io.kadach.FlapFlap
-import io.kadach.component.GameConstants.HEIGHT
-import io.kadach.component.GameConstants.WIDTH
+import io.kadach.component.constant.GameConstants.HEIGHT
+import io.kadach.component.constant.GameConstants.WIDTH
 
 
 class StartScreen(

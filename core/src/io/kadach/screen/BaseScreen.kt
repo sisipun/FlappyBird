@@ -6,10 +6,9 @@ import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.Texture
 import io.kadach.FlapFlap
-import io.kadach.component.BackgroundTextureHandler
-import io.kadach.component.GameConstants.GROUND_HEIGHT
-import io.kadach.component.GameConstants.HEIGHT
-import io.kadach.component.GameConstants.WIDTH
+import io.kadach.component.constant.GameConstants.HEIGHT
+import io.kadach.component.constant.GameConstants.WIDTH
+import io.kadach.component.handler.BackgroundTextureHandler
 
 
 abstract class BaseScreen(
@@ -18,6 +17,10 @@ abstract class BaseScreen(
         private val backgroundTexture: Texture = Texture(BackgroundTextureHandler.getBackgroundTexture()),
         private val groundTexture: Texture = Texture("base.png")
 ) : ScreenAdapter() {
+
+    companion object {
+        const val GROUND_HEIGHT = 150f
+    }
 
     init {
         camera.setToOrtho(false, WIDTH, HEIGHT)
