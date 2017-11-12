@@ -4,8 +4,6 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.math.Rectangle
 import io.kadach.FlapFlap
-import io.kadach.component.constant.GameConstants.HEIGHT
-import io.kadach.component.constant.GameConstants.WIDTH
 
 
 class StartScreen(
@@ -15,10 +13,10 @@ class StartScreen(
 ) : BaseScreen(game) {
 
     init {
-        message.width = WIDTH / 2
-        message.height = HEIGHT/ 2
-        message.x = WIDTH / 2 - message.width / 2
-        message.y = HEIGHT / 2 - message.height / 2
+        message.width = camera.viewportWidth / 2
+        message.height = camera.viewportHeight/ 2
+        message.x = camera.viewportWidth / 2 - message.width / 2
+        message.y = camera.viewportHeight / 2 - message.height / 2
     }
 
     override fun update(delta: Float) {
