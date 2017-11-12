@@ -2,32 +2,31 @@ package io.kadach.screen
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.utils.Array
-import com.badlogic.gdx.utils.TimeUtils
 import io.kadach.FlapFlap
-import io.kadach.model.Bird
-import io.kadach.model.Pipe
+import io.kadach.sprite.Bird
+import io.kadach.sprite.Pipe
 
 
 class GameScreen(
         game: FlapFlap,
-        private val bird: Bird = Bird(100f, 400f, GROUND_HEIGHT, GRAVITY),
-        private val pipes: Array<Pipe> = Array(),
-        private var lastPipeTime: Long = TimeUtils.millis()
+        private val bird: Bird = Bird(200f, 400f, GROUND_HEIGHT, BIRD_SPEED, GRAVITY),
+        private val pipes: Array<Pipe> = Array()
 ) : BaseScreen(game) {
 
     companion object {
+        const val PIPE_SPACING = 100f
         const val HOLE_HEIGHT = 150f
         const val GRAVITY = -25f
-        const val BIRD_SPEED = 5f
+        const val BIRD_SPEED = 300f
     }
 
     override fun update(delta: Float) {
         bird.update(delta)
+        camera.position.x = bird.bound.x + 100
         val iterator = pipes.iterator()
         while (iterator.hasNext()) {
             val pipe = iterator.next()
-            pipe.update(delta)
-            if (pipe.bottomBound.x + pipe.bottomBound.width < 0) {
+            if (pipe.bottomBound.x + pipe.bottomBound.width < camera.position.x - (camera.viewportWidth / 2)) {
                 iterator.remove()
             }
         }
@@ -40,9 +39,8 @@ class GameScreen(
             game.batch.draw(it.topTexture, it.topBound.x, it.topBound.y, it.topBound.width, it.topBound.height)
         }
 
-        if (TimeUtils.millis() - lastPipeTime > 1100) {
-            pipes.add(Pipe(-1 * BIRD_SPEED, GROUND_HEIGHT, HOLE_HEIGHT))
-            lastPipeTime = TimeUtils.millis()
+        if (pipes.size == 0 || camera.position.x + (camera.viewportWidth / 2) - pipes.last().bottomBound.x > PIPE_SPACING) {
+            pipes.add(Pipe(camera.position.x + camera.viewportWidth, GROUND_HEIGHT, HOLE_HEIGHT))
         }
     }
 
