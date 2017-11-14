@@ -1,4 +1,4 @@
-package io.kadach.component.constant
+package io.kadach.constant
 
 
 object GameConstants {

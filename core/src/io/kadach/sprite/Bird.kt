@@ -5,7 +5,8 @@ import com.badlogic.gdx.audio.Sound
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
-import io.kadach.component.handler.BirdTextureHandler
+import com.badlogic.gdx.utils.Array
+import java.util.*
 
 
 class Bird(
@@ -18,13 +19,13 @@ class Bird(
 
     private val width = 40f
     private val height = 40f
-
-    val bound: Rectangle get() = Rectangle(position.x, position.y, width, height)
-    val texture: Texture = Texture(BirdTextureHandler.getBirdTexture())
-
     private val position: Vector2 = Vector2(x, y)
     private val velocity: Vector2 = Vector2(0f, 0f)
     private val flySound: Sound = Gdx.audio.newSound(Gdx.files.internal("sfx_wing.ogg"))
+    private val birdTexturePaths = Array<String>(arrayOf("redbird-midflap.png", "bluebird-midflap.png", "yellowbird-midflap.png"))
+
+    val bound: Rectangle get() = Rectangle(position.x, position.y, width, height)
+    val texture: Texture = Texture(birdTexturePaths[Random().nextInt(birdTexturePaths.size)])
 
 
     fun update(delta: Float) {
