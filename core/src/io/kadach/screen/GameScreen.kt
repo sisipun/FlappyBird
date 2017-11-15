@@ -52,13 +52,13 @@ class GameScreen(
         var death = false
         pipes.forEach {
             if (it.collides(bird.bound)) {
-                game.screen = StartScreen(game)
+                death()
                 death = true
             }
         }
 
         if (bird.bound.y > camera.position.y + (camera.viewportHeight / 2) || bird.bound.y <= GROUND_HEIGHT) {
-            game.screen = StartScreen(game)
+            death()
             death = true
         }
 
@@ -68,6 +68,10 @@ class GameScreen(
     override fun screenDispose() {
         bird.dispose()
         pipes.forEach { it.dispose() }
+    }
+
+    private fun death() {
+        game.screen = GameOverScreen(game)
     }
 
 }

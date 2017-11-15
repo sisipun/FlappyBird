@@ -8,22 +8,22 @@ import io.kadach.FlapFlap
 
 class StartScreen(
         game: FlapFlap,
-        private val messageTexture: Texture = Texture("message.png"),
-        private val message: Rectangle = Rectangle()
+        private val startMessageTexture: Texture = Texture("message.png"),
+        private val startMessage: Rectangle = Rectangle()
 ) : BaseScreen(game) {
 
     init {
-        message.width = camera.viewportWidth / 2
-        message.height = camera.viewportHeight/ 2
-        message.x = camera.viewportWidth / 2 - message.width / 2
-        message.y = camera.viewportHeight / 2 - message.height / 2
+        startMessage.width = camera.viewportWidth / 2
+        startMessage.height = camera.viewportHeight/ 2
+        startMessage.x = camera.viewportWidth / 2 - startMessage.width / 2
+        startMessage.y = camera.viewportHeight / 2 - startMessage.height / 2
     }
 
     override fun update(delta: Float) {
     }
 
     override fun render() {
-        game.batch.draw(messageTexture, message.x, message.y, message.width, message.height)
+        game.batch.draw(startMessageTexture, startMessage.x, startMessage.y, startMessage.width, startMessage.height)
     }
 
     override fun handleInput() {
@@ -34,7 +34,7 @@ class StartScreen(
     }
 
     override fun screenDispose() {
-        messageTexture.dispose()
+        startMessageTexture.dispose()
     }
 
 }

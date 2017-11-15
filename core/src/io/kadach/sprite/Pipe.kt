@@ -32,8 +32,8 @@ class Pipe(
     }
 
     private fun getStartY(): Float{
-        val minHeight = -1 * (holeHeight + 50f)
-        val maxHeight = -1 * (height - minY) + 50f
+        val minHeight = -1 * (holeHeight + 100f)
+        val maxHeight = -1 * (height - minY) + 100f
         return MathUtils.random(minHeight, maxHeight)
     }
 
