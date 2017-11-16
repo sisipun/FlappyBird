@@ -1,6 +1,7 @@
 package io.kadach.screen
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.audio.Sound
 import com.badlogic.gdx.utils.Array
 import io.kadach.FlapFlap
 import io.kadach.sprite.Bird
@@ -12,6 +13,9 @@ class GameScreen(
         private val bird: Bird = Bird(200f, 400f, GROUND_HEIGHT, BIRD_SPEED, GRAVITY),
         private val pipes: Array<Pipe> = Array()
 ) : BaseScreen(game) {
+
+    private val scoreSound: Sound = Gdx.audio.newSound(Gdx.files.internal("sfx_point.wav"))
+    private val dieSound: Sound = Gdx.audio.newSound(Gdx.files.internal("sfx_hit.wav"))
 
     companion object {
         const val PIPE_SPACING = 100f
@@ -51,7 +55,11 @@ class GameScreen(
 
         var death = false
         pipes.forEach {
-            if (it.collides(bird.bound)) {
+            if (it.isScore(bird.bound)) {
+                scoreSound.play()
+            }
+
+            if (it.isCollides(bird.bound)) {
                 death()
                 death = true
             }
@@ -71,6 +79,7 @@ class GameScreen(
     }
 
     private fun death() {
+        dieSound.play()
         game.screen = GameOverScreen(game)
     }
 

@@ -21,7 +21,7 @@ class Bird(
     private val height = 40f
     private val position: Vector2 = Vector2(x, y)
     private val velocity: Vector2 = Vector2(0f, 0f)
-    private val flySound: Sound = Gdx.audio.newSound(Gdx.files.internal("sfx_wing.ogg"))
+    private val flySound: Sound = Gdx.audio.newSound(Gdx.files.internal("sfx_wing.wav"))
     private val birdTexturePaths = Array<String>(arrayOf("redbird-midflap.png", "bluebird-midflap.png", "yellowbird-midflap.png"))
 
     val bound: Rectangle get() = Rectangle(position.x, position.y, width, height)

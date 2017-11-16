@@ -17,14 +17,25 @@ class Pipe(
     private val height = HEIGHT
     private val bottomPosition: Vector2 = Vector2(x, getStartY())
     private val topPosition: Vector2 get() = Vector2(bottomPosition).add(0f, height + holeHeight)
+    private var active = true
 
     val bottomBound: Rectangle get() = Rectangle(bottomPosition.x, bottomPosition.y, width, height)
     val topBound: Rectangle get() = Rectangle(topPosition.x, topPosition.y, width, height)
+    val holeBound: Rectangle get() = Rectangle(bottomPosition.x + width /2  , bottomPosition.y + height, 0f, holeHeight)
     val bottomTexture: Texture = Texture("pipe-bottom-green.png")
     val topTexture: Texture = Texture("pipe-top-green.png")
 
 
-    fun collides(player: Rectangle): Boolean = player.overlaps(bottomBound) || player.overlaps(topBound)
+    fun isCollides(player: Rectangle): Boolean = player.overlaps(bottomBound) || player.overlaps(topBound)
+
+    fun isScore(player: Rectangle): Boolean {
+        if (player.overlaps(holeBound)) {
+            active = false
+            return true
+        }
+
+        return false
+    }
 
     fun dispose() {
         bottomTexture.dispose()
