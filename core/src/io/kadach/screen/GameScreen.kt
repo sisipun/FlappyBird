@@ -9,13 +9,14 @@ import io.kadach.sprite.Pipe
 
 
 class GameScreen(
-        game: FlapFlap,
-        private val bird: Bird = Bird(200f, 400f, GROUND_HEIGHT, BIRD_SPEED, GRAVITY),
-        private val pipes: Array<Pipe> = Array()
+        game: FlapFlap
 ) : BaseScreen(game) {
 
     private val scoreSound: Sound = Gdx.audio.newSound(Gdx.files.internal("sfx_point.wav"))
     private val dieSound: Sound = Gdx.audio.newSound(Gdx.files.internal("sfx_hit.wav"))
+    private val bird: Bird = Bird(200f, 400f, GROUND_HEIGHT, BIRD_SPEED, GRAVITY)
+    private val pipes: Array<Pipe> = Array()
+    private var score = 0
 
     companion object {
         const val PIPE_SPACING = 100f
@@ -56,6 +57,7 @@ class GameScreen(
         var death = false
         pipes.forEach {
             if (it.isScore(bird.bound)) {
+                score++
                 scoreSound.play()
             }
 

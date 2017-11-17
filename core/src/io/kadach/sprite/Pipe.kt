@@ -29,7 +29,7 @@ class Pipe(
     fun isCollides(player: Rectangle): Boolean = player.overlaps(bottomBound) || player.overlaps(topBound)
 
     fun isScore(player: Rectangle): Boolean {
-        if (player.overlaps(holeBound)) {
+        if (active && player.overlaps(holeBound)) {
             active = false
             return true
         }
