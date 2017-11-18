@@ -14,7 +14,7 @@ class StartScreen(
 
     init {
         startMessage.width = camera.viewportWidth / 2
-        startMessage.height = camera.viewportHeight/ 2
+        startMessage.height = camera.viewportHeight / 2
         startMessage.x = camera.viewportWidth / 2 - startMessage.width / 2
         startMessage.y = camera.viewportHeight / 2 - startMessage.height / 2
     }

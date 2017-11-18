@@ -14,7 +14,7 @@ class GameOverScreen(
 
     init {
         gameOverMessage.width = camera.viewportWidth / 2
-        gameOverMessage.height = camera.viewportHeight/ 6
+        gameOverMessage.height = camera.viewportHeight / 6
         gameOverMessage.x = camera.viewportWidth / 2 - gameOverMessage.width / 2
         gameOverMessage.y = camera.viewportHeight / 2 - gameOverMessage.height / 2
     }

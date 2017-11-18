@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Texture
 
 object ScoreHelper {
 
-    val scoreSymbols = mapOf(
+    private val scoreSymbols = mapOf(
             '1' to Texture("1.png"),
             '2' to Texture("2.png"),
             '3' to Texture("3.png"),
@@ -18,13 +18,7 @@ object ScoreHelper {
             '0' to Texture("0.png")
     )
 
-    fun getScore(value: Int): List<Texture> {
-        val symbols = value.toString().toCharArray()
-        val textures = mutableListOf<Texture>()
-        symbols.forEach {
-            textures.add(scoreSymbols[it]!!)
-        }
-        return textures
-    }
+    fun getScore(value: Int): List<Texture> =
+            value.toString().toCharArray().map { scoreSymbols[it]!! }
 
 }
