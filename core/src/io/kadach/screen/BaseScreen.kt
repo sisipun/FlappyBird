@@ -19,8 +19,8 @@ abstract class BaseScreen(
 ) : ScreenAdapter() {
 
     private val backgroundTexturePaths = Array<String>(arrayOf("background-day.png", "background-night.png"))
-    private val backgroundTexture: Texture = Texture(backgroundTexturePaths[Random().nextInt(backgroundTexturePaths.size)])
-    private val groundTexture: Texture = Texture("base.png")
+    private val backgroundTexture = Texture(backgroundTexturePaths[Random().nextInt(backgroundTexturePaths.size)])
+    private val groundTexture = Texture("base.png")
 
     private var firstGroundPosition: Vector2
     private var secondGroundPosition: Vector2

@@ -2,19 +2,35 @@ package io.kadach.screen
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.audio.Sound
+import com.badlogic.gdx.graphics.Texture
+import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.utils.Array
 import io.kadach.FlapFlap
+import io.kadach.constant.GameConstants.HEIGHT
 import io.kadach.sprite.Bird
 import io.kadach.sprite.Pipe
+import io.kadach.utils.ScoreHelper
 
 
-class GameScreen(
-        game: FlapFlap
-) : BaseScreen(game) {
+class GameScreen(game: FlapFlap) : BaseScreen(game) {
 
+    private val bird: Bird = Bird(
+            BIRD_START_POSITION_X,
+            BIRD_START_POSITION_Y,
+            BIRD_SPEED,
+            GRAVITY,
+            BIRD_WIDTH,
+            BIRD_HEIGHT,
+            Array(
+                    arrayOf(
+                            Texture("redbird-midflap.png"),
+                            Texture("bluebird-midflap.png"),
+                            Texture("yellowbird-midflap.png"))
+            ),
+            Gdx.audio.newSound(Gdx.files.internal("sfx_wing.wav"))
+    )
     private val scoreSound: Sound = Gdx.audio.newSound(Gdx.files.internal("sfx_point.wav"))
     private val dieSound: Sound = Gdx.audio.newSound(Gdx.files.internal("sfx_hit.wav"))
-    private val bird: Bird = Bird(200f, 400f, GROUND_HEIGHT, BIRD_SPEED, GRAVITY)
     private val pipes: Array<Pipe> = Array()
     private var score = 0
 
@@ -23,6 +39,14 @@ class GameScreen(
         const val HOLE_HEIGHT = 150f
         const val GRAVITY = -25f
         const val BIRD_SPEED = 300f
+        const val BIRD_START_POSITION_X = 200f
+        const val BIRD_START_POSITION_Y = 400f
+        const val BIRD_WIDTH = 40f
+        const val BIRD_HEIGHT = 40f
+        const val PIPE_WIDTH = 75f
+        const val PIPE_HEIGHT = HEIGHT
+        const val SCORE_WIDTH = 35f
+        const val SCORE_HEIGHT = 50f
     }
 
     override fun update(delta: Float) {
@@ -43,9 +67,13 @@ class GameScreen(
             game.batch.draw(it.bottomTexture, it.bottomBound.x, it.bottomBound.y, it.bottomBound.width, it.bottomBound.height)
             game.batch.draw(it.topTexture, it.topBound.x, it.topBound.y, it.topBound.width, it.topBound.height)
         }
+        val textures = ScoreHelper.getScore(score)
+        textures.forEachIndexed { index, texture ->
+            game.batch.draw(texture, camera.position.x + (35f * (index - textures.size + 1)), camera.position.y + camera.viewportHeight / 2.7f, SCORE_WIDTH, SCORE_HEIGHT)
+        }
 
         if (pipes.size == 0 || camera.position.x + (camera.viewportWidth / 2) - pipes.last().bottomBound.x > PIPE_SPACING) {
-            pipes.add(Pipe(camera.position.x + camera.viewportWidth, GROUND_HEIGHT, HOLE_HEIGHT))
+            pipes.add(Pipe(camera.position.x + camera.viewportWidth, generatePipeY(), HOLE_HEIGHT, PIPE_WIDTH, PIPE_HEIGHT))
         }
     }
 
@@ -56,18 +84,18 @@ class GameScreen(
 
         var death = false
         pipes.forEach {
-            if (it.isScore(bird.bound)) {
+            if (it.isCollidesHole(bird.bound)) {
                 score++
                 scoreSound.play()
             }
 
-            if (it.isCollides(bird.bound)) {
+            if (it.isCollidesPipe(bird.bound)) {
                 death()
                 death = true
             }
         }
 
-        if (bird.bound.y > camera.position.y + (camera.viewportHeight / 2) || bird.bound.y <= GROUND_HEIGHT) {
+        if (bird.bound.y >= camera.position.y + (camera.viewportHeight / 2) || bird.bound.y <= GROUND_HEIGHT) {
             death()
             death = true
         }
@@ -83,6 +111,12 @@ class GameScreen(
     private fun death() {
         dieSound.play()
         game.screen = GameOverScreen(game)
+    }
+
+    private fun generatePipeY(): Float {
+        val minHeight = -1 * (HOLE_HEIGHT + 100f)
+        val maxHeight = -1 * (PIPE_HEIGHT - GROUND_HEIGHT) + 100f
+        return MathUtils.random(minHeight, maxHeight)
     }
 
 }

@@ -1,6 +1,5 @@
 package io.kadach.sprite
 
-import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.audio.Sound
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.math.Rectangle
@@ -12,20 +11,19 @@ import java.util.*
 class Bird(
         x: Float,
         y: Float,
-        private val minY: Float,
         private val horizontalVelocity: Float,
-        private val verticalVelocity: Float
+        private val verticalVelocity: Float,
+        private val width: Float,
+        private val height: Float,
+        birdTextures: Array<Texture>,
+        private val flySound: Sound? = null
 ) {
 
-    private val width = 40f
-    private val height = 40f
     private val position: Vector2 = Vector2(x, y)
     private val velocity: Vector2 = Vector2(0f, 0f)
-    private val flySound: Sound = Gdx.audio.newSound(Gdx.files.internal("sfx_wing.wav"))
-    private val birdTexturePaths = Array<String>(arrayOf("redbird-midflap.png", "bluebird-midflap.png", "yellowbird-midflap.png"))
 
     val bound: Rectangle get() = Rectangle(position.x, position.y, width, height)
-    val texture: Texture = Texture(birdTexturePaths[Random().nextInt(birdTexturePaths.size)])
+    val texture: Texture = birdTextures[Random().nextInt(birdTextures.size)]
 
 
     fun update(delta: Float) {
@@ -34,19 +32,16 @@ class Bird(
 
         position.add(horizontalVelocity * delta, velocity.y)
         velocity.scl(1 / delta)
-        if (position.y < minY) {
-            position.y = minY
-        }
     }
 
     fun jump() {
         velocity.y = 550f
-        flySound.play()
+        flySound?.play()
     }
 
     fun dispose() {
         texture.dispose()
-        flySound.dispose()
+        flySound?.dispose()
     }
 
 }
