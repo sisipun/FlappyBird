@@ -23,10 +23,11 @@ class GameScreen(game: FlapFlap) : BaseScreen(game) {
             BIRD_HEIGHT,
             Array(
                     arrayOf(
-                            Texture("redbird-midflap.png"),
-                            Texture("bluebird-midflap.png"),
-                            Texture("yellowbird-midflap.png"))
+                            Texture("redbirdanimation.png"),
+                            Texture("bluebirdanimation.png"),
+                            Texture("yellowbirdanimation.png"))
             ),
+            3,
             Gdx.audio.newSound(Gdx.files.internal("sfx_wing.wav"))
     )
     private val scoreSound: Sound = Gdx.audio.newSound(Gdx.files.internal("sfx_point.wav"))
