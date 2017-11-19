@@ -33,7 +33,7 @@ class GameScreen(game: FlapFlap) : BaseScreen(game) {
     private val scoreSound: Sound = Gdx.audio.newSound(Gdx.files.internal("sfx_point.wav"))
     private val dieSound: Sound = Gdx.audio.newSound(Gdx.files.internal("sfx_hit.wav"))
     private val pipes: Array<Pipe> = Array()
-    private var score = 9
+    private var score = 0
 
     companion object {
         const val PIPE_SPACING = 100f
