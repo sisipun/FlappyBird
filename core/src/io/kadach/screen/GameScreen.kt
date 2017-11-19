@@ -33,7 +33,7 @@ class GameScreen(game: FlapFlap) : BaseScreen(game) {
     private val scoreSound: Sound = Gdx.audio.newSound(Gdx.files.internal("sfx_point.wav"))
     private val dieSound: Sound = Gdx.audio.newSound(Gdx.files.internal("sfx_hit.wav"))
     private val pipes: Array<Pipe> = Array()
-    private var score = 0
+    private var score = 9
 
     companion object {
         const val PIPE_SPACING = 100f
@@ -63,18 +63,48 @@ class GameScreen(game: FlapFlap) : BaseScreen(game) {
     }
 
     override fun render() {
-        game.batch.draw(bird.texture, bird.bound.x, bird.bound.y, bird.bound.width, bird.bound.height)
+        game.batch.draw(
+                bird.texture,
+                bird.bound.x,
+                bird.bound.y,
+                bird.bound.width,
+                bird.bound.height
+        )
         pipes.forEach {
-            game.batch.draw(it.bottomTexture, it.bottomBound.x, it.bottomBound.y, it.bottomBound.width, it.bottomBound.height)
-            game.batch.draw(it.topTexture, it.topBound.x, it.topBound.y, it.topBound.width, it.topBound.height)
+            game.batch.draw(
+                    it.bottomTexture,
+                    it.bottomBound.x,
+                    it.bottomBound.y,
+                    it.bottomBound.width,
+                    it.bottomBound.height
+            )
+            game.batch.draw(
+                    it.topTexture,
+                    it.topBound.x,
+                    it.topBound.y,
+                    it.topBound.width,
+                    it.topBound.height
+            )
         }
-        val textures = ScoreHelper.getScore(score)
-        textures.forEachIndexed { index, texture ->
-            game.batch.draw(texture, camera.position.x + (35f * (index - textures.size + 1)), camera.position.y + camera.viewportHeight / 2.7f, SCORE_WIDTH, SCORE_HEIGHT)
+        val scoreTextures = ScoreHelper.getScore(score)
+        scoreTextures.forEachIndexed { index, texture ->
+            game.batch.draw(
+                    texture,
+                    camera.position.x + (40f * (index - scoreTextures.size + 1)),
+                    camera.position.y + camera.viewportHeight / 2.7f,
+                    SCORE_WIDTH,
+                    SCORE_HEIGHT
+            )
         }
 
         if (pipes.size == 0 || camera.position.x + (camera.viewportWidth / 2) - pipes.last().bottomBound.x > PIPE_SPACING) {
-            pipes.add(Pipe(camera.position.x + camera.viewportWidth, generatePipeY(), HOLE_HEIGHT, PIPE_WIDTH, PIPE_HEIGHT))
+            pipes.add(Pipe(
+                    camera.position.x + camera.viewportWidth,
+                    generatePipeY(),
+                    HOLE_HEIGHT,
+                    PIPE_WIDTH,
+                    PIPE_HEIGHT)
+            )
         }
     }
 
@@ -109,9 +139,14 @@ class GameScreen(game: FlapFlap) : BaseScreen(game) {
         pipes.forEach { it.dispose() }
     }
 
+    override fun pause() {
+        game.screen = GameOverScreen(game, score)
+        super.pause()
+    }
+
     private fun death() {
         dieSound.play()
-        game.screen = GameOverScreen(game)
+        game.screen = GameOverScreen(game, score)
     }
 
     private fun generatePipeY(): Float {

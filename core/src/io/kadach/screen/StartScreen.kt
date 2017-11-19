@@ -19,11 +19,14 @@ class StartScreen(
         startMessage.y = camera.viewportHeight / 2 - startMessage.height / 2
     }
 
-    override fun update(delta: Float) {
-    }
-
     override fun render() {
-        game.batch.draw(startMessageTexture, startMessage.x, startMessage.y, startMessage.width, startMessage.height)
+        game.batch.draw(
+                startMessageTexture,
+                startMessage.x,
+                startMessage.y,
+                startMessage.width,
+                startMessage.height
+        )
     }
 
     override fun handleInput() {

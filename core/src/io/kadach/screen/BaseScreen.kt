@@ -18,8 +18,10 @@ abstract class BaseScreen(
         protected val camera: OrthographicCamera = OrthographicCamera()
 ) : ScreenAdapter() {
 
-    private val backgroundTexturePaths = Array<String>(arrayOf("background-day.png", "background-night.png"))
-    private val backgroundTexture = Texture(backgroundTexturePaths[Random().nextInt(backgroundTexturePaths.size)])
+    private val backgroundTexturePaths
+            = Array<String>(arrayOf("background-day.png", "background-night.png"))
+    private val backgroundTexture
+            = Texture(backgroundTexturePaths[Random().nextInt(backgroundTexturePaths.size)])
     private val groundTexture = Texture("base.png")
 
     private var firstGroundPosition: Vector2
@@ -31,17 +33,23 @@ abstract class BaseScreen(
 
     init {
         camera.setToOrtho(false, WIDTH, HEIGHT)
-        firstGroundPosition = Vector2(camera.position.x - camera.viewportWidth / 2, 0f)
-        secondGroundPosition = Vector2((camera.position.x - camera.viewportWidth / 2) + camera.viewportWidth, 0f)
+        firstGroundPosition = Vector2(
+                camera.position.x - camera.viewportWidth / 2,
+                0f
+        )
+        secondGroundPosition = Vector2(
+                (camera.position.x - camera.viewportWidth / 2) + camera.viewportWidth,
+                0f
+        )
     }
 
-    abstract fun update(delta: Float)
+    open protected fun update(delta: Float) {}
 
-    abstract fun render()
+    open protected fun render() {}
 
-    abstract fun handleInput()
+    open protected fun handleInput() {}
 
-    abstract fun screenDispose()
+    open protected fun screenDispose() {}
 
     override fun render(delta: Float) {
         Gdx.gl.glClearColor(1f, 1f, 1f, 1f)
@@ -51,10 +59,28 @@ abstract class BaseScreen(
         camera.update()
         game.batch.projectionMatrix = camera.combined
         game.batch.begin()
-        game.batch.draw(backgroundTexture, camera.position.x - (camera.viewportWidth / 2), 0f, camera.viewportWidth, camera.viewportHeight)
+        game.batch.draw(
+                backgroundTexture,
+                camera.position.x - (camera.viewportWidth / 2),
+                0f,
+                camera.viewportWidth,
+                camera.viewportHeight
+        )
         render()
-        game.batch.draw(groundTexture, firstGroundPosition.x, firstGroundPosition.y, camera.viewportWidth, GROUND_HEIGHT)
-        game.batch.draw(groundTexture, secondGroundPosition.x, secondGroundPosition.y, camera.viewportWidth, GROUND_HEIGHT)
+        game.batch.draw(
+                groundTexture,
+                firstGroundPosition.x,
+                firstGroundPosition.y,
+                camera.viewportWidth,
+                GROUND_HEIGHT
+        )
+        game.batch.draw(
+                groundTexture,
+                secondGroundPosition.x,
+                secondGroundPosition.y,
+                camera.viewportWidth,
+                GROUND_HEIGHT
+        )
         game.batch.end()
         handleInput()
     }
