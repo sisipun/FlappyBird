@@ -11,6 +11,9 @@ class FlapFlap : Game() {
 
     override fun create() {
         batch = SpriteBatch()
+//        val music = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"))
+//        music.isLooping = true
+//        music.play()
         setScreen(StartScreen(this))
     }
 
