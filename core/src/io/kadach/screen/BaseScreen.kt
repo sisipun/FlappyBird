@@ -10,6 +10,8 @@ import com.badlogic.gdx.utils.Array
 import io.kadach.FlapFlap
 import io.kadach.constant.GameConstants.HEIGHT
 import io.kadach.constant.GameConstants.WIDTH
+import io.kadach.constant.PreferenceKeys.HIGH_SCORE
+import io.kadach.constant.PreferenceKeys.PREFERENCE_NAME
 import java.util.*
 
 
@@ -17,6 +19,9 @@ abstract class BaseScreen(
         protected val game: FlapFlap,
         protected val camera: OrthographicCamera = OrthographicCamera()
 ) : ScreenAdapter() {
+
+    private val preferences = Gdx.app.getPreferences(PREFERENCE_NAME)
+    protected var highScore = preferences.getInteger(HIGH_SCORE)
 
     private val backgroundTexturePaths
             = Array<String>(arrayOf("background-day.png", "background-night.png"))
@@ -88,6 +93,11 @@ abstract class BaseScreen(
     override fun dispose() {
         backgroundTexture.dispose()
         screenDispose()
+    }
+
+    protected fun updateHighScore(newHighScore: Int) {
+        preferences.putInteger(HIGH_SCORE, newHighScore)
+        preferences.flush()
     }
 
     private fun updateGround() {
