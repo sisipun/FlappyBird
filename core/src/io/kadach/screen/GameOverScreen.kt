@@ -12,7 +12,7 @@ class GameOverScreen(
         private val score: Int,
         private val gameOverMessageTexture: Texture = Texture("gameover.png"),
         private val scoreMessageTexture: Texture = Texture("score.png"),
-        private val highScoreMessageTexture: Texture = Texture("score.png"),
+        private val highScoreMessageTexture: Texture = Texture("highscore.png"),
         private val gameOverMessage: Rectangle = Rectangle(),
         private val scoreMessage: Rectangle = Rectangle(),
         private val highScoreMessage: Rectangle = Rectangle()
@@ -25,6 +25,7 @@ class GameOverScreen(
 
     init {
         if (score > highScore) {
+            highScore = score
             updateHighScore(score)
         }
         gameOverMessage.width = camera.viewportWidth / 2
@@ -35,7 +36,7 @@ class GameOverScreen(
         scoreMessage.height = camera.viewportHeight / 16
         scoreMessage.x = camera.viewportWidth / 2 - scoreMessage.width
         scoreMessage.y = camera.viewportHeight / 2.2f - scoreMessage.height / 2 - gameOverMessage.height / 2
-        highScoreMessage.width = camera.viewportWidth / 6
+        highScoreMessage.width = camera.viewportWidth / 3
         highScoreMessage.height = camera.viewportHeight / 16
         highScoreMessage.x = camera.viewportWidth / 2 - highScoreMessage.width
         highScoreMessage.y = camera.viewportHeight / 2.6f - highScoreMessage.height / 2 - gameOverMessage.height / 2
